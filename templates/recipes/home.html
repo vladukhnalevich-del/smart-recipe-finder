@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Recipe Finder - Главная</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        a {
+            color: #2196F3;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 5px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .api-example {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .api-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .api-example div {
+            margin: 8px 0;
+            font-family: monospace;
+            padding: 5px;
+            background: white;
+            border-left: 3px solid #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smart Recipe Finder</h1>
+    <p>Добро пожаловать в систему поиска и управления рецептами!</p>
+
+    <ul>
+        <li><a href="/client/">Клиентский интерфейс</a></li>
+        <li><a href="/api/recipes/">API рецептов</a></li>
+        <li><a href="/admin/">Админ-панель</a></li>
+    </ul>
+
+    <div class="api-example">
+        <div class="api-title">Примеры использования API:</div>
+        <div>GET /api/recipes/ - получить все рецепты</div>
+        <div>POST /api/recipes/ - создать новый рецепт</div>
+        <div>GET /api/recipes/1/ - получить рецепт с ID=1</div>
+        <div>DELETE /api/recipes/1/ - удалить рецепт с ID=1</div>
+    </div>
+</body>
+</html>
