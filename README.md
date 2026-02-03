@@ -99,7 +99,7 @@ smart-recipe-finder/
 │   ├── base.html                  # Базовый шаблон
 │   ├── home.html                  # Главная страница
 │   └── client.html                # Клиентский интерфейс
-├── media/                         # Загружаемые файлы (игнорируется в Git)
+├── media/                         # Загружаемые файлы 
 │   └── recipe_images/
 ├── manage.py                      # Управление Django
 ├── README.md                      # Документация
