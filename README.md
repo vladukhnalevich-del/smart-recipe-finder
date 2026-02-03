@@ -126,7 +126,7 @@ python manage.py migrate
 ```bash
 python manage.py createsuperuser
 ```
-### Запустить сервеh
+### Запустить сервер
 ```bash
 python manage.py runserver
 ```
