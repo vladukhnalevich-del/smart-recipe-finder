@@ -9,19 +9,22 @@ from .models import Recipe
 @csrf_exempt
 def api_recipes(request):
     if request.method == 'GET':
-
         recipes = Recipe.objects.all()
-        data = [
-            {
+        data = []
+        for r in recipes:
+            ingredients_list = r.ingredients.split('\n') if r.ingredients else []
+
+            recipe_data = {
                 "id": r.id,
-                "title": r.title,
-                "ingredients": r.ingredients,
+                "name": r.name,
+                "ingredients": ingredients_list,
                 "instructions": r.instructions,
                 "cooking_time": r.cooking_time,
-                #"created_at": r.created_at.isoformat() if r.created_at else None
+                "cuisine": r.cuisine,
+                "difficulty": r.difficulty
             }
-            for r in recipes
-        ]
+            data.append(recipe_data)
+
         response = JsonResponse(data, safe=False, json_dumps_params={'ensure_ascii': False})
         response['Content-Type'] = 'application/json; charset=utf-8'
         return response
@@ -31,34 +34,36 @@ def api_recipes(request):
             data = json.loads(request.body)
 
 
-            title = data.get('title') or data.get('name')
-            if not title:
+            name = data.get('name') or data.get('title')
+            if not name:
                 return JsonResponse({"error": "Название рецепта обязательно"}, status=400)
 
 
-            ingredients = data.get('ingredients')
-            if not ingredients:
-                return JsonResponse({"error": "Ингредиенты обязательны"}, status=400)
-
-
+            ingredients = data.get('ingredients', '')
             if isinstance(ingredients, list):
                 ingredients = '\n'.join(ingredients)
 
-
             recipe = Recipe.objects.create(
-                title=title,
+                name=name,
                 ingredients=ingredients,
                 instructions=data.get('instructions', ''),
-                cooking_time=data.get('cooking_time', 30)
+                cooking_time=data.get('cooking_time', 30),
+
+                cuisine=data.get('cuisine', 'russian'),
+                difficulty=data.get('difficulty', 'medium')
             )
+
+
+            ingredients_list = recipe.ingredients.split('\n') if recipe.ingredients else []
 
             response_data = {
                 "id": recipe.id,
-                "title": recipe.title,
-                "ingredients": recipe.ingredients,
+                "name": recipe.name,
+                "ingredients": ingredients_list,
                 "instructions": recipe.instructions,
                 "cooking_time": recipe.cooking_time,
-                #"created_at": recipe.created_at.isoformat() if recipe.created_at else None
+                "cuisine": recipe.cuisine,
+                "difficulty": recipe.difficulty
             }
             return JsonResponse(response_data, status=201, json_dumps_params={'ensure_ascii': False})
 
@@ -71,18 +76,19 @@ def api_recipes(request):
 @csrf_exempt
 def api_recipe_detail(request, id):
     try:
-
         recipe = Recipe.objects.get(id=id)
 
         if request.method == 'GET':
+            ingredients_list = recipe.ingredients.split('\n') if recipe.ingredients else []
+
             data = {
                 "id": recipe.id,
-                "title": recipe.title,
-                "ingredients": recipe.ingredients,
+                "name": recipe.name,
+                "ingredients": ingredients_list,
                 "instructions": recipe.instructions,
                 "cooking_time": recipe.cooking_time,
-                #"created_at": recipe.created_at.isoformat() if recipe.created_at else None,
-                #"updated_at": recipe.updated_at.isoformat() if recipe.updated_at else None
+                "cuisine": recipe.cuisine,
+                "difficulty": recipe.difficulty
             }
             return JsonResponse(data, json_dumps_params={'ensure_ascii': False})
 

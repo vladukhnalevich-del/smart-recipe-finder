@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+
+.tab {
+    padding: 10px 20px;
+    background: #ddd;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 4px 4px 0 0;
+}
+
+.tab.active {
+    background: #4CAF50;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    background: white;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.btn-search { background: #4CAF50; }
+.btn-all { background: #2196F3; }
+.btn-delete { background: #f44336; }
+.btn-save { background: #4CAF50; width: 100%; padding: 12px; }
+
+
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.search-box, .delete-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box input, .delete-box input {
+    flex: 1;
+}
+
+
+.recipe-card {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.recipe-meta {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
