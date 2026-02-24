@@ -76,36 +76,45 @@ DELETE /api/recipes/{id}/     # Удалить рецепт
 
 ```bash
 smart-recipe-finder/
-├── apps/                           # Django приложения
-│   └── recipes/                    # Приложение рецептов
-│       ├── migrations/             # Миграции базы данных
+├── apps/
+│   └── recipes/                          # Приложение рецептов
+│       ├── migrations/                    # Миграции базы данных
+│       ├── tests/                         # Тесты
+│       │   ├── __init__.py
+│       │   ├── test_models.py             # Тесты моделей
+│       │   ├── test_api.py                 # Тесты API
+│       │   ├── test_validation.py          # Тесты валидации
+│       │   ├── test_edge_cases.py          # Граничные случаи
+│       │   ├── test_performance.py         # Тесты производительности
+│       │   ├── test_security.py            # Тесты безопасности
+│       │   └── test_integration.py         # Интеграционные тесты
 │       ├── __init__.py
-│       ├── apps.py                # Конфигурация приложения
-│       ├── models.py              # Модели данных
-│       ├── urls.py                # Маршруты приложения
-│       └── views.py               # Представления и логика
-├── config/                         # Настройки проекта
+│       ├── admin.py                        # Админ-панель
+│       ├── apps.py                          # Конфигурация приложения
+│       ├── models.py                        # Модели данных
+│       ├── urls.py                          # Маршруты приложения
+│       └── views.py                         # Представления и логика
+├── config/                                 # Настройки проекта
 │   ├── __init__.py
 │   ├── asgi.py
-│   ├── settings.py                # Конфигурация Django
-│   ├── urls.py                    # Главные маршруты
+│   ├── settings.py                         # Конфигурация Django
+│   ├── urls.py                              # Главные маршруты
 │   └── wsgi.py
-├── static/                        # Статические файлы
+├── static/                                  # Статические файлы
 │   ├── css/
-│   │   └── styles.css
-│   ├── js/
-│   └── images/
-├── templates/                     # HTML шаблоны
-│   ├── base.html                  # Базовый шаблон
-│   ├── home.html                  # Главная страница
-│   └── client.html                # Клиентский интерфейс
-├── media/                         # Загружаемые файлы 
-│   └── recipe_images/
-├── manage.py                      # Управление Django
-├── README.md                      # Документация
-├── requirements.txt               # Зависимости Python
-├── db.sqlite3                     # База данных (только для разработки)
-└── tests/                         # Тесты
+│   │   └── client.css                       # Стили для клиента
+│   └── js/
+│       └── client.js                         # JavaScript для клиента
+├── templates/                               # HTML шаблоны
+│   └── recipes/
+│       ├── base.html                         # Базовый шаблон
+│       ├── client.html                        # Клиентский интерфейс
+│       └── home.html                          # Главная страница
+├── media/                                    # Загружаемые файлы
+├── manage.py                                 # Управление Django
+├── README.md                                 # Документация
+├── requirements.txt                          # Зависимости Python
+└── db.sqlite3                                # База данных
 ```
 
 #  Команды управления
@@ -134,26 +143,50 @@ python manage.py runserver
 ```bash
 python manage.py shell
 ```
+## Тестирование
 
-#  Примеры данных
-
-### JSON для создания рецепта
+### Запуск всех тестов
 ```bash
-{
-  "name": "Оливье",
-  "ingredients": ["картошка", "морковь", "горошек", "колбаса", "майонез"],
-  "instructions": "1. Отварить овощи\n2. Нарезать кубиками\n3. Смешать с майонезом",
-  "cooking_time": 60
-}
+python manage.py test apps.recipes
 ```
-### Ответ API
+### Запуск конкретных тестов
+```bash
+# Тесты моделей
+python manage.py test apps.recipes.tests.test_models
+
+# Тесты API
+python manage.py test apps.recipes.tests.test_api
+
+# Тесты валидации
+python manage.py test apps.recipes.tests.test_validation
+```
+
+
+#  Примеры запросов
+
+### Создание рецепта:
+```bash
+curl -X POST http://127.0.0.1:8000/api/recipes/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Борщ",
+    "ingredients": ["свекла", "капуста", "морковь"],
+    "instructions": "1. Сварить бульон\n2. Добавить овощи",
+    "cooking_time": 90,
+    "cuisine": "russian",
+    "difficulty": "medium"
+  }'
+```
+### Ответ 
 ```bash
 {
   "id": 1,
-  "name": "Оливье",
-  "ingredients": ["картошка", "морковь", "горошек", "колбаса", "майонез"],
-  "instructions": "1. Отварить овощи\n2. Нарезать кубиками\n3. Смешать с майонезом",
-  "cooking_time": 60
+  "name": "Борщ",
+  "ingredients": ["свекла", "капуста", "морковь"],
+  "instructions": "1. Сварить бульон\n2. Добавить овощи",
+  "cooking_time": 90,
+  "cuisine": "russian",
+  "difficulty": "medium"
 }
 ```
 #  Отладка
