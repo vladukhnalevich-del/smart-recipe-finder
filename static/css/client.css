@@ -101,3 +101,63 @@ input, textarea, select {
     background: #f9f9f9;
     border-radius: 4px;
 }
+
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+    border-left: 4px solid #c62828;
+    font-weight: bold;
+}
+
+.success-message {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+    border-left: 4px solid #2e7d32;
+    font-weight: bold;
+}
+
+.loading-message {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+    border-left: 4px solid #1565c0;
+    font-weight: bold;
+}
+
+.warning-message {
+    background-color: #fff3e0;
+    color: #f57c00;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+    border-left: 4px solid #f57c00;
+    font-weight: bold;
+}
+
+.info-message {
+    background-color: #e8eaf6;
+    color: #283593;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+    border-left: 4px solid #283593;
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.loading-message {
+    animation: pulse 1.5s infinite;
+}

@@ -2,6 +2,7 @@
 
 class Recipe(models.Model):
     name = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, null=True, blank=True)
     ingredients = models.TextField()
     instructions = models.TextField()
     cooking_time = models.IntegerField()
@@ -38,3 +39,10 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.title and self.name:
+            self.title = self.name
+        if not self.name and self.title:
+            self.name = self.title
+        super().save(*args, **kwargs)

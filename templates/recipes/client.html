@@ -9,56 +9,79 @@
 <body>
     <h1>Smart Recipe Finder</h1>
 
-    <div>
-        <span class="tab active" onclick="showTab('search')">Поиск</span>
-        <span class="tab" onclick="showTab('all')">Все рецепты</span>
-        <span class="tab" onclick="showTab('create')">Создать</span>
-        <span class="tab" onclick="showTab('delete')">Удалить</span>
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('search')">Поиск</div>
+        <div class="tab" onclick="showTab('all')">Все рецепты</div>
+        <div class="tab" onclick="showTab('create')">Создать</div>
+        <div class="tab" onclick="showTab('delete')">Удалить</div>
     </div>
 
     <div id="search-tab" class="tab-content active">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Введите название...">
+            <input type="text" id="searchInput" placeholder="Введите название рецепта...">
             <button class="btn btn-search" onclick="searchRecipe()">Найти</button>
         </div>
-        <div id="searchResult" class="result"></div>
+        <div class="result" id="searchResult">
+            Введите название рецепта для поиска
+        </div>
     </div>
 
     <div id="all-tab" class="tab-content">
-        <button class="btn btn-all" onclick="getAllRecipes()">Показать все</button>
-        <div id="allResult" class="result"></div>
+        <button class="btn btn-all" onclick="getAllRecipes()">Показать все рецепты</button>
+        <div class="result" id="allResult">
+            Нажмите кнопку для просмотра
+        </div>
     </div>
 
     <div id="create-tab" class="tab-content">
-        <input type="text" id="name" placeholder="Название">
-        <textarea id="ingredients" rows="3" placeholder="Ингредиенты (каждый с новой строки)"></textarea>
-        <textarea id="instructions" rows="3" placeholder="Инструкции"></textarea>
-        <input type="number" id="cooking_time" value="30">
+        <div class="form-group">
+            <label>Название рецепта:</label>
+            <input type="text" id="name" placeholder="Например: Борщ">
+        </div>
 
-        <select id="cuisine">
-            <option value="russian">Русская</option>
-            <option value="italian">Итальянская</option>
-            <option value="french">Французская</option>
-            <option value="chinese">Китайская</option>
-            <option value="japanese">Японская</option>
-        </select>
+        <div class="form-group">
+            <label>Ингредиенты (каждый на новой строке):</label>
+            <textarea id="ingredients" rows="4" placeholder="Картошка&#10;Морковь&#10;Лук"></textarea>
+        </div>
 
-        <select id="difficulty">
-            <option value="easy">Легко</option>
-            <option value="medium">Средняя</option>
-            <option value="hard">Сложно</option>
-        </select>
+        <div class="form-group">
+            <label>Инструкции приготовления:</label>
+            <textarea id="instructions" rows="4" placeholder="1. Нарежьте овощи&#10;2. Сварите бульон"></textarea>
+        </div>
 
-        <button class="btn btn-save" onclick="createRecipe()">Сохранить</button>
-        <div id="createResult" class="result"></div>
+        <div class="form-group">
+            <label>Время приготовления (минуты):</label>
+            <input type="number" id="cooking_time" value="30" min="1">
+        </div>
+
+        <div class="form-group">
+            <label>Тип кухни:</label>
+            <select id="cuisine">
+                {% for value, label in cuisine_choices %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Сложность приготовления:</label>
+            <select id="difficulty">
+                {% for value, label in difficulty_choices %}
+                <option value="{{ value }}" {% if value == 'medium' %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button class="btn btn-save" onclick="createRecipe()">Сохранить рецепт</button>
+        <div class="result" id="createResult"></div>
     </div>
 
     <div id="delete-tab" class="tab-content">
         <div class="delete-box">
-            <input type="number" id="deleteId" placeholder="ID рецепта">
+            <input type="number" id="deleteId" placeholder="Введите ID рецепта" min="1">
             <button class="btn btn-delete" onclick="deleteRecipe()">Удалить</button>
         </div>
-        <div id="deleteResult" class="result"></div>
+        <div class="result" id="deleteResult"></div>
     </div>
 
     <script src="/static/js/client.js"></script>
