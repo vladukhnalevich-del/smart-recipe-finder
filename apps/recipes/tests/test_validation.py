@@ -153,7 +153,7 @@ class RecipeValidationTest(TestCase):
         self.assertEqual(len(saved_recipe.name), 1000)
 
     def test_very_long_ingredients(self):
-        long_ingredients = "Ингредиент\n" * 100
+        long_ingredients = "Ингредиент\n" * 99 + "Ингредиент"
         recipe = Recipe(
             name="Тест",
             ingredients=long_ingredients,
@@ -164,10 +164,11 @@ class RecipeValidationTest(TestCase):
         )
         recipe.save()
         saved_recipe = Recipe.objects.get(id=recipe.id)
-        self.assertEqual(len(saved_recipe.ingredients.split('\n')), 100)
+        lines = [line for line in saved_recipe.ingredients.split('\n') if line]
+        self.assertEqual(len(lines), 100)
 
     def test_very_long_instructions(self):
-        long_instructions = "Шаг 1\n" * 100
+        long_instructions = "Шаг 1\n" * 99 + "Шаг 100"
         recipe = Recipe(
             name="Тест",
             ingredients="ингредиенты",
@@ -178,7 +179,8 @@ class RecipeValidationTest(TestCase):
         )
         recipe.save()
         saved_recipe = Recipe.objects.get(id=recipe.id)
-        self.assertEqual(len(saved_recipe.instructions.split('\n')), 100)
+        lines = [line for line in saved_recipe.instructions.split('\n') if line]
+        self.assertEqual(len(lines), 100)
 
     def test_special_characters(self):
         recipe = Recipe(
